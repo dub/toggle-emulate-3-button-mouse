@@ -7,7 +7,7 @@ version = "1.0.0"
 name = "Toggle 3 Button Mouse Emulation"
 tagline = "Toggle the 3 button mouse emulation preference."
 maintainer = "Aaron Van de Weijenberg"
-# Supported types: "add-on", "theme"
+# Supported types: "add-on",
 type = "add-on"
 
 # Optional link to documentation, support, source files, etc

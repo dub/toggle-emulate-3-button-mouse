@@ -1,55 +1,62 @@
-bl_info = {
-    "name": "Toggle Emulate 3 Button Mouse",
-    "blender": (3, 0, 0),
-    "category": "3D View",
-}
-
 import bpy
 from bpy.types import Operator
 
+bl_info = {
+    "name": "Toggle Emulate 3 Button Mouse",
+    "author": "Your Name",
+    "version": (1, 0),
+    "blender": (2, 80, 0),
+    "location": "View3D > Shift+Ctrl+Alt+M",
+    "description": "Toggles the 'Emulate 3 Button Mouse' preference",
+    "category": "User Interface",
+}
 
-class TOGGLE_EMULATE_3_BUTTON_MOUSE_OT_operator(Operator):
-    bl_idname = "wm.toggle_emulate_3_button_mouse"
+class EMULATE_OT_toggle_three_button_mouse(Operator):
+    bl_idname = "emulate.toggle_three_button_mouse"
     bl_label = "Toggle Emulate 3 Button Mouse"
-    
+    bl_description = "Toggle the 'Emulate 3 Button Mouse' preference"
+
     def execute(self, context):
-        # Get the current state of the "Emulate 3 Button Mouse" setting
-        prefs = context.preferences
-        input_prefs = prefs.inputs
-        
+        # Access user preferences
+        preferences = context.preferences
+        input_prefs = preferences.inputs
+
         # Toggle the preference
         input_prefs.use_mouse_emulate_3_button = not input_prefs.use_mouse_emulate_3_button
-        
-        # Get the new state and report it
-        new_state = input_prefs.use_mouse_emulate_3_button
-        self.report({'INFO'}, f"Emulate 3 Button Mouse: {'ON' if new_state else 'OFF'}")
-        
+
+        # Prepare status message
+        status = "ON" if input_prefs.use_mouse_emulate_3_button else "OFF"
+        self.report({'INFO'}, f"Emulate 3 Button Mouse: {status}")
+
         return {'FINISHED'}
 
+addon_keymaps = []
+
 def register():
-    # Register the operator
-    bpy.utils.register_class(TOGGLE_EMULATE_3_BUTTON_MOUSE_OT_operator)
-    
-    # Set the hotkey (Shift + Ctrl + Alt + M)
+    bpy.utils.register_class(EMULATE_OT_toggle_three_button_mouse)
+
+    # Add the keymap
     wm = bpy.context.window_manager
     kc = wm.keyconfigs.addon
     if kc:
         km = kc.keymaps.new(name="Window", space_type='EMPTY')
-        kmi = km.keymap_items.new(TOGGLE_EMULATE_3_BUTTON_MOUSE_OT_operator.bl_idname, 'M', 'PRESS', ctrl=True, shift=True, alt=True)
+        kmi = km.keymap_items.new(
+            EMULATE_OT_toggle_three_button_mouse.bl_idname,
+            type='M',
+            value='PRESS',
+            shift=True,
+            ctrl=True,
+            alt=True
+        )
+        addon_keymaps.append((km, kmi))
 
 def unregister():
-    # Unregister the operator
-    bpy.utils.unregister_class(TOGGLE_EMULATE_3_BUTTON_MOUSE_OT_operator)
-    
-    # Remove the hotkey
-    wm = bpy.context.window_manager
-    kc = wm.keyconfigs.addon
-    if kc:
-        km = kc.keymaps['Window']
-        for kmi in km.keymap_items:
-            if kmi.idname == TOGGLE_EMULATE_3_BUTTON_MOUSE_OT_operator.bl_idname:
-                km.keymap_items.remove(kmi)
-                break
+    # Remove the keymap
+    for km, kmi in addon_keymaps:
+        km.keymap_items.remove(kmi)
+    addon_keymaps.clear()
+
+    bpy.utils.unregister_class(EMULATE_OT_toggle_three_button_mouse)
 
 if __name__ == "__main__":
     register()
