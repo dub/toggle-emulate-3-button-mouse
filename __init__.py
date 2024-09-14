@@ -39,10 +39,9 @@ class EmulatePreference(AddonPreferences):
 
     def draw(self, context):
         layout = self.layout
+        layout.label(text="Keymap")
         row = layout.row()
-        box = row.box()
-        box.label(text="Keymap")
-        col = box.column()
+        col = row.column()
 
         wm = bpy.context.window_manager
         kc = wm.keyconfigs.user
@@ -62,14 +61,14 @@ class EmulatePreference(AddonPreferences):
 
         for km, kmi in get_kmi_1:
             if not km.name == old_km_name:
-                col.label(text=str(km.name), icon="DOT")
+                col.label(text=str(km.name))
             col.context_pointer_set("keymap", km)
             rna_keymap_ui.draw_kmi([],kc, km, kmi, col, 0)
             col.separator()
             old_km_name = km.name
             
 
-            
+
 
 def register():
     bpy.utils.register_class(EMULATE_OT_toggle_three_button_mouse)
