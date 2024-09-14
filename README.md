@@ -10,7 +10,7 @@ Blender reserves the `Alt` key for this function :(
 
 ## Installation
 
-1. Download the [latest release](https://github.com/dub/toggle-emulate-3-button-mouse/releases/tag/v1.0).
+1. Download the [latest release](https://github.com/dub/toggle-emulate-3-button-mouse/releases/tag/v1.0) or the [zip file](https://github.com/dub/toggle-emulate-3-button-mouse/archive/refs/tags/v1.0.zip) directly.
 2. In Blender, open Preference > Add ons > Install from disk
 3. Enable the add on by checking its checkbox in the add on list
 
