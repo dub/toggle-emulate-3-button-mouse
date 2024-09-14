@@ -4,10 +4,10 @@ from bpy.types import Operator, AddonPreferences
 
 bl_info = {
     "name": "Toggle Emulate 3 Button Mouse",
-    "author": "Your Name",
+    "author": "Aaron Van de Weijenberg",
     "version": (1, 0),
     "blender": (2, 80, 0),
-    "location": "View3D > Shift+Ctrl+Alt+M",
+    "location": "Shift+Ctrl+Alt+M",
     "description": "Toggles the 'Emulate 3 Button Mouse' preference",
     "category": "User Interface",
 }
@@ -69,6 +69,8 @@ class EmulatePreference(AddonPreferences):
             old_km_name = km.name
             
 
+            
+
 def register():
     bpy.utils.register_class(EMULATE_OT_toggle_three_button_mouse)
     bpy.utils.register_class(EmulatePreference)
@@ -99,3 +101,4 @@ def unregister():
 
 if __name__ == "__main__":
     register()
+
